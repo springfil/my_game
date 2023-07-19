@@ -1,6 +1,6 @@
 <template>
-  <span :class="['item', (field.value === 1 && preview) ? 'item-active' : '']"></span>
-</template>
+    <span :class="[ 'item', (field.value === 1 && preview) ? 'item-active' : '' ]"></span>
+  </template>
 
 <script setup>
 import { defineProps } from "vue";
@@ -12,7 +12,7 @@ defineProps({
   },
   preview: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false,
   }
 });
@@ -34,7 +34,7 @@ defineProps({
   margin: 5px;
   cursor: pointer;
 
-  transition: 2s;
+  transition: 0.9s;
   transform-style: preserve-3d;
 }
 

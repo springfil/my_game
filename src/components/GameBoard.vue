@@ -8,19 +8,21 @@ const number = 36;
 const { difficult, fields, init } = useGameInit(number);
 
 const { start, preview } = useGameStart(init, fields, difficult, number);
+
+
 </script>
 
 <template>
   <div class="board-wrapper">
     <div class="board">
       <board-item
+         :preview="preview"
         v-for="field in fields"
         :key="'item-' + field.id"
         :field="field"
-        :preview="preview"
       />
     </div>
-
+{{ preview }}
     <p class="difficult">
       Сложность : <strong>{{ difficult }}</strong>
     </p>

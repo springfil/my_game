@@ -24,14 +24,15 @@ export default function useGameStart(init, fields, difficult, number) {
         i--;
       }
     }
+    setTimeout(() => {
+        preview.value = false
+      }, 2000);
+    
   };
 
-  setTimeout(() => {
-    preview.value = false
-  }, 2000);
 
   return {
     start,
-    preview
+    preview,
   };
 }
