@@ -1,5 +1,5 @@
 <template>
-  <span :class="['item', field.value === 1 ? 'item-active' : '']"></span>
+  <span :class="['item', (field.value === 1 && preview) ? 'item-active' : '']"></span>
 </template>
 
 <script setup>
@@ -10,6 +10,11 @@ defineProps({
     type: Object,
     required: true,
   },
+  preview: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 </script>
 
