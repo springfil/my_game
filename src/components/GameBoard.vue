@@ -1,44 +1,30 @@
 <script setup>
 import BoardItem from "./BoardItem";
-import { ref, onBeforeMount } from "vue";
+import useGameInit from "./composable/useGameInit";
+import useGameStart from "./composable/useGameStart";
 
-const difficult = ref('Легкая');
-let fields = ref([]);
 const number = 36;
 
-const init = () => {
-  fields.value = [];
+const {difficult, fields, init} = useGameInit(number)
 
-  for (let i = 0; i < number; i++){
-    fields.value.push({
-      id: i,
-      clicked: false,
-      value: 0
-    });
-  }
-};
+const { start } = useGameStart(init, fields, difficult, number);
 
-onBeforeMount(init);
 
-const start = () => {
-  init();
-  prepareGame();
-};
-
-const prepareGame = () => {
-
-};
 
 </script>
 
 <template>
     <div class="board-wrapper">
         <div class="board">
-          <board-item v-for="field in fields" :key="'item-' + field.id" />
+          <board-item v-for="field in fields" :key="'item-' + field.id" :field="field"/>
         </div>
         
         <p class="difficult"> Сложность : <strong>{{ difficult }}</strong></p>
-        <button class="btn" @click="start"> Старт </button>
+        <div class="button-cont">
+
+            <button class="btn" @click="start"> Старт </button>
+            <button class="btn" @click="difficult ++"> + </button>
+        </div>
     </div>
 </template>
 
@@ -70,5 +56,12 @@ const prepareGame = () => {
 
 .btn:hover {
     background: #c0392b;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 </style>
