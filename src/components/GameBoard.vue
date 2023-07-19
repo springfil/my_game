@@ -1,4 +1,5 @@
 <script setup>
+<<<<<<< HEAD
 import { ref,inject } from "vue";
 import BoardItem from "./BoardItem";
 import useGameInit from "../composable/useGameInit";
@@ -33,10 +34,42 @@ const { selectField, isNext, isReset } = useGameProcess(
   difficult,
   start
 );
+=======
+import BoardItem from "./BoardItem";
+import { ref, onBeforeMount } from "vue";
+
+const difficult = ref('Легкая');
+let fields = ref([]);
+const number = 36;
+
+const init = () => {
+  fields.value = [];
+
+  for (let i = 0; i < number; i++){
+    fields.value.push({
+      id: i,
+      clicked: false,
+      value: 0
+    });
+  }
+};
+
+onBeforeMount(init);
+
+const start = () => {
+  init();
+  prepareGame();
+};
+
+const prepareGame = () => {
+
+};
+>>>>>>> 96ed41a (create gameboard with some logic)
 
 </script>
 
 <template>
+<<<<<<< HEAD
   <div class="test">
     <div class="board-wrapper">
       <div class="board">
@@ -62,6 +95,19 @@ const { selectField, isNext, isReset } = useGameProcess(
   </div>
 </template>
 
+=======
+    <div class="board-wrapper">
+        <div class="board">
+          <board-item v-for="field in fields" :key="'item-' + field.id" />
+        </div>
+        
+        <p class="difficult"> Сложность : <strong>{{ difficult }}</strong></p>
+        <button class="btn" @click="start"> Старт </button>
+    </div>
+</template>
+
+
+>>>>>>> 96ed41a (create gameboard with some logic)
 <style scoped>
 .board-wrapper {
   display: flex;
@@ -70,6 +116,7 @@ const { selectField, isNext, isReset } = useGameProcess(
   justify-content: center;
 }
 .board {
+<<<<<<< HEAD
   width: 350px;
   background: #eee;
   border: none;
@@ -96,5 +143,26 @@ const { selectField, isNext, isReset } = useGameProcess(
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+=======
+  width: 360px;
+  background: #eee;
+  border: none;
+  border-radius: 10px ;
+}
+
+.btn{
+    background: #2d3741;
+    color: white;
+    border: none;
+    border-radius: 10px ;
+    padding: 10px 30px;
+    margin: 10px 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn:hover {
+    background: #c0392b;
+>>>>>>> 96ed41a (create gameboard with some logic)
 }
 </style>
