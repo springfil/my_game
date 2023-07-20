@@ -53,9 +53,10 @@ const { start, preview } = useGameStart(init, fields, difficult, number);
   border: none;
   border-radius: 10px;
   padding: 10px 30px;
-  margin: 10px 0;
+  margin: 10px 5px;
   cursor: pointer;
   outline: none;
+
 }
 
 .btn:hover {

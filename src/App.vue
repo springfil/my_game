@@ -1,8 +1,7 @@
 <template>
   <div class = "app">
     <img class="logo" src="./assets/logo.png" alt="Vue logo">
-    <h1 class="h1"> Доска судьбы </h1>
-    <p> call to action (description) || ' ' </p>
+    <h1 class="h1"> Коробка удачи </h1>
   </div>
     
   <game-board />
