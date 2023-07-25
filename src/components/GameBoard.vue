@@ -1,33 +1,44 @@
 <script setup>
+import { ref } from "vue";
 import BoardItem from "./BoardItem";
 import useGameInit from "../composable/useGameInit";
-import useGameStart from '../composable/useGameStart';
+import useGameStart from "../composable/useGameStart";
+import useGameProcess from "../composable/useGameProcess";
+import { GAME_STATUS } from "../constants/GAME_STATUS";
 
 const numberOfCells = 30;
+const gameStatus = ref(GAME_STATUS.NONE);
 
 const { difficult, fields, init } = useGameInit(numberOfCells);
 
-const { start, preview } = useGameStart(init, fields, difficult, numberOfCells);
+const { start,canStartGame } = useGameStart(
+  init,
+  fields,
+  difficult,
+  numberOfCells,
+  gameStatus
+);
 
-
+const { selectField } = useGameProcess(fields);
 </script>
 
 <template>
   <div class="board-wrapper">
     <div class="board">
       <board-item
-         :preview="preview"
+        :game-status="gameStatus"
         v-for="field in fields"
         :key="'item-' + field.id"
         :field="field"
+        @selectField="selectField($event)"
       />
     </div>
-{{ preview }}
+
     <p class="difficult">
       Сложность : <strong>{{ difficult }}</strong>
     </p>
     <div class="button-cont">
-      <button class="btn" @click="start">Старт</button>
+      <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
       <button class="btn" @click="difficult++">+</button>
     </div>
   </div>
@@ -56,7 +67,6 @@ const { start, preview } = useGameStart(init, fields, difficult, numberOfCells);
   margin: 10px 5px;
   cursor: pointer;
   outline: none;
-
 }
 
 .btn:hover {

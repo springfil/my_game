@@ -1,31 +1,46 @@
 <template>
-  <span :class="boardItemClass"></span>
+  <img :class="boardItemClasses" @click="select(field.id)">
+  
+
 </template>
 
 <script setup>
-import { computed, defineProps } from "vue";
+import { computed, defineProps, defineEmits } from "vue";
+import { GAME_STATUS } from "../constants/GAME_STATUS";
+import { FIELD } from "../constants/FIELD";
 
 const props = defineProps({
   field: {
     type: Object,
     required: true,
   },
-  preview: {
-    type: Boolean,
+  gameStatus: {
+    type: Number,
     required: false,
-    default: false,
+    default: GAME_STATUS.NONE,
   },
 });
 
-const boardItemClass = computed(() => {
-  const classes = ["item"];
+const emit = defineEmits(['selectField'])
 
-  if (props.field.value === 1 && props.preview) {
-    classes.push("item-active");
+const boardItemClasses = computed(() => {
+  let classes = "item ";
+  if (
+    props.field.value === FIELD.FILLED &&
+    props.gameStatus === GAME_STATUS.PREVIEW ||
+    props.field.clicked
+  ) {
+    classes += "active";
   }
-
   return classes;
 });
+
+const select = (id) =>{
+  if(props.gameStatus === GAME_STATUS.STARTED){
+    emit('selectField', id);
+
+  }
+}
 </script>
 
 <style scoped>
@@ -48,7 +63,7 @@ const boardItemClass = computed(() => {
   transform-style: preserve-3d;
 }
 
-.item-active {
+.item.active {
   background: url("https://pictures.pibig.info/uploads/posts/2023-04/1680522788_pictures-pibig-info-p-nezuko-risunki-vkontakte-26.jpg");
   background-size: cover;
   background-position: center;
