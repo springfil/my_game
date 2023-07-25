@@ -1,13 +1,13 @@
 <script setup>
 import BoardItem from "./BoardItem";
-import useGameInit from "./composable/useGameInit";
-import useGameStart from "./composable/useGameStart";
+import useGameInit from "../composable/useGameInit";
+import useGameStart from '../composable/useGameStart';
 
-const number = 36;
+const numberOfCells = 30;
 
-const { difficult, fields, init } = useGameInit(number);
+const { difficult, fields, init } = useGameInit(numberOfCells);
 
-const { start, preview } = useGameStart(init, fields, difficult, number);
+const { start, preview } = useGameStart(init, fields, difficult, numberOfCells);
 
 
 </script>

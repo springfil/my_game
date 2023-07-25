@@ -1,11 +1,11 @@
 <template>
-    <span :class="[ 'item', (field.value === 1 && preview) ? 'item-active' : '' ]"></span>
-  </template>
+  <span :class="boardItemClass"></span>
+</template>
 
 <script setup>
-import { defineProps } from "vue";
+import { computed, defineProps } from "vue";
 
-defineProps({
+const props = defineProps({
   field: {
     type: Object,
     required: true,
@@ -14,7 +14,17 @@ defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+});
+
+const boardItemClass = computed(() => {
+  const classes = ["item"];
+
+  if (props.field.value === 1 && props.preview) {
+    classes.push("item-active");
   }
+
+  return classes;
 });
 </script>
 
