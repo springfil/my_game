@@ -1,7 +1,10 @@
-import { ref } from "vue";
 
-export default function useGameStart(init, fields, difficult, numberOfCells) {
-  const preview = ref(false);
+import { FIELD } from "@/constants/FIELD";
+import { GAME_STATUS } from "@/constants/GAME_STATUS";
+import { computed } from 'vue'
+
+export default function useGameStart(init, fields, difficult, numberOfCells, gameStatus) {
+ 
 
   const start = () => {
     init();
@@ -13,25 +16,31 @@ export default function useGameStart(init, fields, difficult, numberOfCells) {
   };
 
   const prepareGame = () => {
-    preview.value = true;
+ 
+    gameStatus.value = GAME_STATUS.PREVIEW;
 
     for (let i = 0; i < difficult.value; ) {
       const index = getRandom(0, numberOfCells - 1);
 
-      if (fields.value[index].value === 1) {
+      if (fields.value[index].value === FIELD.FILLED) {
         continue;
       }
 
-      fields.value[index].value = 1;
+      fields.value[index].value = FIELD.FILLED;
       i++;
     }
     setTimeout(() => {
-      preview.value = false;
+      
+      gameStatus.value = GAME_STATUS.STARTED;
     }, 2000);
   };
 
+  const canStartGame = computed(() => {
+    return gameStatus.value !== GAME_STATUS.PREVIEW;
+  })
+
   return {
     start,
-    preview,
+    canStartGame,
   };
 }

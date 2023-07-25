@@ -1,7 +1,9 @@
 import { ref, onBeforeMount } from "vue";
+import { FIELD } from "@/constants/FIELD";
+import { DIFFICULT } from "@/constants/DIFFICULT";
 
 export default function useGameInit(numberOfCells) {
-  const difficult = ref(2);
+  const difficult = ref(DIFFICULT);
   const fields = ref([]);
 
   const init = () => {
@@ -11,7 +13,7 @@ export default function useGameInit(numberOfCells) {
       fields.value.push({
         id: i,
         clicked: false,
-        value: 0,
+        value: FIELD.EMPTY,
       });
     }
   };
