@@ -49,8 +49,8 @@ const select = (id) => {
 <style scoped>
 .item {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 
   background: url("../assets/logo.png");
   background-size: cover;

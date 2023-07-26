@@ -2,8 +2,7 @@
   <div class = "app">
     <img class="logo" src="./assets/logo.png" alt="Vue logo">
     <h1 class="h1"> Коробка удачи </h1>
-  </div>
-    
+  </div>    
   <game-board />
 </template>
 

@@ -6,7 +6,7 @@ import useGameStart from "../composable/useGameStart";
 import useGameProcess from "../composable/useGameProcess";
 import { GAME_STATUS } from "../constants/GAME_STATUS";
 
-const numberOfCells = 30;
+const numberOfCells = 25;
 const gameStatus = ref(GAME_STATUS.NONE);
 
 const { difficult, fields, init } = useGameInit(numberOfCells);
@@ -53,7 +53,7 @@ const { selectField } = useGameProcess(fields, gameStatus, difficult, start);
   justify-content: center;
 }
 .board {
-  width: 360px;
+  width: 350px;
   background: #eee;
   border: none;
   border-radius: 10px;
