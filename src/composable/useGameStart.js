@@ -1,6 +1,7 @@
 
 import { FIELD } from "@/constants/FIELD";
 import { GAME_STATUS } from "@/constants/GAME_STATUS";
+import { GAME_SPEED } from "@/constants/GAME_SPEED";
 import { computed } from 'vue'
 
 export default function useGameStart(init, fields, difficult, numberOfCells, gameStatus) {
@@ -29,10 +30,11 @@ export default function useGameStart(init, fields, difficult, numberOfCells, gam
       fields.value[index].value = FIELD.FILLED;
       i++;
     }
+    
     setTimeout(() => {
       
       gameStatus.value = GAME_STATUS.STARTED;
-    }, 2000);
+    }, GAME_SPEED);
   };
 
   const canStartGame = computed(() => {

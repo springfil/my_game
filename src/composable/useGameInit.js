@@ -1,9 +1,9 @@
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { FIELD } from "@/constants/FIELD";
-import { DIFFICULT } from "@/constants/DIFFICULT";
+import { DEFAULT_DIFFICULT, MAX_DIFFICULT } from "@/constants/DIFFICULT";
 
 export default function useGameInit(numberOfCells) {
-  const difficult = ref(DIFFICULT);
+  const difficult = ref(DEFAULT_DIFFICULT);
   const fields = ref([]);
 
   const init = () => {
@@ -17,6 +17,12 @@ export default function useGameInit(numberOfCells) {
       });
     }
   };
+
+  watch(difficult, (newDifficult) => {
+    if (newDifficult > MAX_DIFFICULT) {
+      difficult.value = MAX_DIFFICULT;
+    }
+  });
 
   onBeforeMount(init);
 

@@ -11,7 +11,7 @@ const gameStatus = ref(GAME_STATUS.NONE);
 
 const { difficult, fields, init } = useGameInit(numberOfCells);
 
-const { start,canStartGame } = useGameStart(
+const { start, canStartGame } = useGameStart(
   init,
   fields,
   difficult,
@@ -19,7 +19,7 @@ const { start,canStartGame } = useGameStart(
   gameStatus
 );
 
-const { selectField } = useGameProcess(fields);
+const { selectField } = useGameProcess(fields, gameStatus, difficult, start);
 </script>
 
 <template>
@@ -38,8 +38,9 @@ const { selectField } = useGameProcess(fields);
       Сложность : <strong>{{ difficult }}</strong>
     </p>
     <div class="button-cont">
-      <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
-      <button class="btn" @click="difficult++">+</button>
+      <button class="btn" @click="start" :disabled="!canStartGame">
+        Старт
+      </button>
     </div>
   </div>
 </template>

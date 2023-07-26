@@ -1,7 +1,5 @@
 <template>
-  <img :class="boardItemClasses" @click="select(field.id)">
-  
-
+  <img :class="boardItemClasses" @click="select(field.id)" />
 </template>
 
 <script setup>
@@ -21,26 +19,31 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['selectField'])
+const emit = defineEmits(["selectField"]);
 
 const boardItemClasses = computed(() => {
   let classes = "item ";
+
   if (
-    props.field.value === FIELD.FILLED &&
-    props.gameStatus === GAME_STATUS.PREVIEW ||
-    props.field.clicked
+    (props.field.value === FIELD.FILLED &&
+      props.gameStatus === GAME_STATUS.PREVIEW) ||
+    (props.field.clicked && props.field.value === FIELD.FILLED)
   ) {
     classes += "active";
   }
+
+  if (props.field.clicked && props.field.value === FIELD.EMPTY) {
+    classes += " error";
+  }
+
   return classes;
 });
 
-const select = (id) =>{
-  if(props.gameStatus === GAME_STATUS.STARTED){
-    emit('selectField', id);
-
+const select = (id) => {
+  if (props.gameStatus === GAME_STATUS.STARTED) {
+    emit("selectField", id);
   }
-}
+};
 </script>
 
 <style scoped>
@@ -65,6 +68,13 @@ const select = (id) =>{
 
 .item.active {
   background: url("https://pictures.pibig.info/uploads/posts/2023-04/1680522788_pictures-pibig-info-p-nezuko-risunki-vkontakte-26.jpg");
+  background-size: cover;
+  background-position: center;
+  transform: rotateX(720deg);
+}
+
+.item.error {
+  background: url("https://www.freepngimg.com/thumb/trollface/98161-picture-trollface-free-hd-image.png");
   background-size: cover;
   background-position: center;
   transform: rotateX(720deg);
