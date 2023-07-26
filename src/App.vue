@@ -3,7 +3,7 @@
     <img class="logo" src="./assets/logo.png" alt="Vue logo">
     <h1 class="h1"> Коробка удачи </h1>
   </div>    
-  <game-board />
+  <game-board  />
 </template>
 
 <script setup>
@@ -20,5 +20,11 @@ import GameBoard from './components/GameBoard';
 
   .logo{
     width: 100px;
+    animation: floatingAnimation 1.5s infinite ease-in-out alternate;
   }
+
+  @keyframes floatingAnimation {
+  from { transform: translate(0, 0); }
+  to { transform: translate(0px, 10px); }
+}
 </style>
