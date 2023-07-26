@@ -19,7 +19,7 @@ const { start, canStartGame } = useGameStart(
   gameStatus
 );
 
-const { selectField } = useGameProcess(fields, gameStatus, difficult, start);
+const { selectField, isNext, isReset } = useGameProcess(fields, gameStatus, difficult, start);
 </script>
 
 <template>
@@ -35,13 +35,15 @@ const { selectField } = useGameProcess(fields, gameStatus, difficult, start);
     </div>
 
     <p class="difficult">
-      Сложность : <strong>{{ difficult }}</strong>
+      Множитель атаки <strong>X*{{ difficult }}</strong>
     </p>
-    <div class="button-cont">
+    <p class="next" v-if="isNext">УСИЛЕНИЕ</p>
+    <p class="reset" v-if="isReset">Попробуй снова</p>
+    
       <button class="btn" @click="start" :disabled="!canStartGame">
         Старт
       </button>
-    </div>
+     
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 import { FIELD } from "@/constants/FIELD";
 import { GAME_STATUS } from "@/constants/GAME_STATUS";
 import { DEFAULT_DIFFICULT } from "@/constants/DIFFICULT";
-import { nextTick } from "vue";
+import { computed, nextTick } from "vue";
 import { GAME_SPEED } from "@/constants/GAME_SPEED";
 
 export default function useGameProcess(fields, gameStatus, difficult, start) {
@@ -38,19 +38,33 @@ export default function useGameProcess(fields, gameStatus, difficult, start) {
 
   const setGameOver = () => {
     console.log("gameover");
-    gameStatus.value = GAME_STATUS.FAIL;
+    gameStatus.value = GAME_STATUS.RESET;
     difficult.value = DEFAULT_DIFFICULT;
   };
 
   const setWin = () => {
+    gameStatus.value = GAME_STATUS.NEXT;
+    console.log("win");
     setTimeout(async () => {
       difficult.value += 2;
+
       await nextTick();
+
       start();
     }, GAME_SPEED);
   };
 
+  const isNext = computed(() => {
+    return gameStatus.value === GAME_STATUS.NEXT;
+  });
+
+  const isReset = computed(() => {
+    return gameStatus.value === GAME_STATUS.RESET;
+  });
+
   return {
     selectField,
+    isNext,
+    isReset,
   };
 }
