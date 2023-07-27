@@ -23,7 +23,7 @@ export default function useGameInit(numberOfCells) {
       difficult.value = MAX_DIFFICULT;
     }
   });
-
+console.log(difficult)
   onBeforeMount(init);
 
   return {

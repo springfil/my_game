@@ -1,10 +1,17 @@
 <script setup>
-import { ref } from "vue";
+import { ref,inject } from "vue";
 import BoardItem from "./BoardItem";
 import useGameInit from "../composable/useGameInit";
 import useGameStart from "../composable/useGameStart";
 import useGameProcess from "../composable/useGameProcess";
 import { GAME_STATUS } from "../constants/GAME_STATUS";
+
+
+const data = inject('data');
+
+const updateData = () => {
+    data.value = difficult.value;
+}; 
 
 const numberOfCells = 25;
 const gameStatus = ref(GAME_STATUS.NONE);
@@ -16,34 +23,42 @@ const { start, canStartGame } = useGameStart(
   fields,
   difficult,
   numberOfCells,
-  gameStatus
+  gameStatus,
+  updateData
 );
 
-const { selectField, isNext, isReset } = useGameProcess(fields, gameStatus, difficult, start);
+const { selectField, isNext, isReset } = useGameProcess(
+  fields,
+  gameStatus,
+  difficult,
+  start
+);
+
 </script>
 
 <template>
-  <div class="board-wrapper">
-    <div class="board">
-      <board-item
-        :game-status="gameStatus"
-        v-for="field in fields"
-        :key="'item-' + field.id"
-        :field="field"
-        @selectField="selectField($event)"
-      />
-    </div>
+  <div class="test">
+    <div class="board-wrapper">
+      <div class="board">
+        <board-item
+          :game-status="gameStatus"
+          v-for="field in fields"
+          :key="'item-' + field.id"
+          :field="field"
+          @selectField="selectField($event)"
+        />
+      </div>
 
-    <p class="difficult">
-      Множитель атаки <strong>X*{{ difficult }}</strong>
-    </p>
-    <p class="next" v-if="isNext">УСИЛЕНИЕ</p>
-    <p class="reset" v-if="isReset">Попробуй снова</p>
-    
+      <p class="difficult">
+        Множитель атаки <strong>X*{{ difficult }}</strong>
+      </p>
+      <p class="next" v-if="isNext">УСИЛЕНИЕ</p>
+      <p class="reset" v-if="isReset">Попробуй снова</p>
+
       <button class="btn" @click="start" :disabled="!canStartGame">
         Старт
       </button>
-     
+    </div>
   </div>
 </template>
 

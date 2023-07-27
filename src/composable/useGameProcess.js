@@ -5,6 +5,8 @@ import { computed, nextTick } from "vue";
 import { GAME_SPEED } from "@/constants/GAME_SPEED";
 
 export default function useGameProcess(fields, gameStatus, difficult, start) {
+  let timerId = null;
+
   const selectField = (id) => {
     const index = fields.value.findIndex((field) => {
       return field.id === id;
@@ -45,7 +47,9 @@ export default function useGameProcess(fields, gameStatus, difficult, start) {
   const setWin = () => {
     gameStatus.value = GAME_STATUS.NEXT;
     console.log("win");
-    setTimeout(async () => {
+    clearTimeout(timerId);
+
+    timerId = setTimeout(async () => {
       difficult.value += 2;
 
       await nextTick();

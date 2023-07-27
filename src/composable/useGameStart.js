@@ -1,14 +1,21 @@
-
 import { FIELD } from "@/constants/FIELD";
 import { GAME_STATUS } from "@/constants/GAME_STATUS";
 import { GAME_SPEED } from "@/constants/GAME_SPEED";
-import { computed } from 'vue'
+import { computed } from "vue";
 
-export default function useGameStart(init, fields, difficult, numberOfCells, gameStatus) {
- 
+export default function useGameStart(
+  init,
+  fields,
+  difficult,
+  numberOfCells,
+  gameStatus,
+  updateData
+) {
+  let timerId = null;
 
   const start = () => {
     init();
+    updateData();
     prepareGame();
   };
 
@@ -17,7 +24,6 @@ export default function useGameStart(init, fields, difficult, numberOfCells, gam
   };
 
   const prepareGame = () => {
- 
     gameStatus.value = GAME_STATUS.PREVIEW;
 
     for (let i = 0; i < difficult.value; ) {
@@ -30,16 +36,19 @@ export default function useGameStart(init, fields, difficult, numberOfCells, gam
       fields.value[index].value = FIELD.FILLED;
       i++;
     }
-    
-    setTimeout(() => {
-      
+
+    clearTimeout(timerId);
+    timerId = setTimeout(() => {
       gameStatus.value = GAME_STATUS.STARTED;
     }, GAME_SPEED);
   };
-
+  //кнопка не доступна для нажатия ,если у нас превью или выиграли раунд
   const canStartGame = computed(() => {
-    return gameStatus.value !== GAME_STATUS.PREVIEW;
-  })
+    return (
+      gameStatus.value !== GAME_STATUS.PREVIEW &&
+      gameStatus.value !== GAME_STATUS.NEXT
+    );
+  });
 
   return {
     start,
