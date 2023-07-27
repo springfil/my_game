@@ -1,7 +1,3 @@
-<template>
-  <img :class="boardItemClasses" @click="select(field.id)" />
-</template>
-
 <script setup>
 import { computed, defineProps, defineEmits } from "vue";
 import { GAME_STATUS } from "../constants/GAME_STATUS";
@@ -45,6 +41,10 @@ const select = (id) => {
   }
 };
 </script>
+
+<template>
+  <img :class="boardItemClasses" @click="select(field.id)" />
+</template>
 
 <style scoped>
 .item {
