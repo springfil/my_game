@@ -2,6 +2,7 @@ import { FIELD } from "@/constants/FIELD";
 import { GAME_STATUS } from "@/constants/GAME_STATUS";
 import { GAME_SPEED } from "@/constants/GAME_SPEED";
 import { computed } from "vue";
+import { getRandom } from "@/utils/getRandom";
 
 export default function useGameStart(
   init,
@@ -14,14 +15,12 @@ export default function useGameStart(
   let timerId = null;
 
   const start = () => {
-    init();
     updateData();
+    init();
     prepareGame();
   };
 
-  const getRandom = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
+
 
   const prepareGame = () => {
     gameStatus.value = GAME_STATUS.PREVIEW;
@@ -42,7 +41,7 @@ export default function useGameStart(
       gameStatus.value = GAME_STATUS.STARTED;
     }, GAME_SPEED);
   };
-  //кнопка не доступна для нажатия ,если у нас превью или выиграли раунд
+
   const canStartGame = computed(() => {
     return (
       gameStatus.value !== GAME_STATUS.PREVIEW &&
